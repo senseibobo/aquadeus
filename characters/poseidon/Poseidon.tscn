@@ -23,6 +23,7 @@ aim_left_control = "p2_aim_left"
 aim_right_control = "p2_aim_right"
 basic_attack_control = "p2_basic_attack"
 melee_attack_control = "p2_melee_attack"
+dash_control = "p2_dash"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_left = -16.0
