@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://characters/neptune/neptune.gd" type="Script" id=1]
+[ext_resource path="res://characters/characterUI.gd" type="Script" id=2]
+[ext_resource path="res://characters/Trident.tscn" type="PackedScene" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16, 16 )
+
+[node name="Neptune" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource( 1 )
+move_up_control = "p1_move_up"
+move_down_control = "p1_move_down"
+move_left_control = "p1_move_left"
+move_right_control = "p1_move_right"
+aim_up_control = "p1_aim_up"
+aim_down_control = "p1_aim_down"
+aim_left_control = "p1_aim_left"
+aim_right_control = "p1_aim_right"
+basic_attack_control = "p1_basic_attack"
+melee_attack_control = "p1_melee_attack"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+color = Color( 0.0196078, 0.67451, 0.415686, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource( 2 )
+
+[node name="Health" type="ProgressBar" parent="UI"]
+margin_right = 301.0
+margin_bottom = 32.0
+value = 100.0
+
+[node name="Trident" parent="." instance=ExtResource( 3 )]
