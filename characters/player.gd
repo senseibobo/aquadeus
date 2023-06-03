@@ -10,7 +10,7 @@ enum STATE {
 
 var state: int = STATE.FREE
 
-var speed: float = 300.0
+var speed: float = 460.0
 var frozen: bool = false
 
 export(int,1,2) var player: int
@@ -34,12 +34,16 @@ export var trident_dash_speed: float = 1200.0
 export var trident_dash_distance: float = 150.0
 var trident_dash_distance_left: float = 0.0
 
+var acceleration: float = 4.8
+var velocity: Vector2
+
 
 var last_dir: Vector2
 
 func _ready():
 	trident.connect("returning",self,"trident_returned")
 	trident.connect("stab",self,"trident_stabbing")
+	Global.players[player] = self
 
 func trident_stabbing():
 	state = STATE.ATTACK_DASHING
@@ -49,13 +53,15 @@ func trident_returned():
 	state = STATE.FREE
 
 func _process(delta):
+	
+	#print(name + " " + str(state))
 	if frozen: return
 	match state:
 		STATE.FREE:
 			get_aim_dir()
 			if Input.is_action_just_pressed(basic_attack_control):
 				basic_attack()
-			if Input.is_action_just_pressed(melee_attack_control):
+			if Input.is_action_just_pressed(melee_attack_control) and not trident.attacking:
 				trident.attack()
 				state = STATE.CHARGING
 		STATE.CHARGING:
@@ -64,10 +70,24 @@ func _process(delta):
 
 func _physics_process(delta):
 	if frozen: return
+	if not Rect2(0,0,1920,1080).has_point(global_position):
+		if global_position.x < 0.0:
+			print("idem udesno")
+			velocity.x = lerp(velocity.x, 5, 10.0*delta)
+		if global_position.y < 0.0:
+			velocity.y = lerp(velocity.y, 5, 10.0*delta)
+		if global_position.x > 1920.0:
+			velocity.x = lerp(velocity.x, -5, 10.0*delta)
+		if global_position.y > 1080.0:
+			velocity.y = lerp(velocity.y, -5, 10.0*delta)
 	match state:
 		STATE.FREE:
 			var move_vec = get_move_dir()
-			move_and_slide(move_vec*speed)
+			velocity = velocity.linear_interpolate(move_vec,acceleration*delta)
+			move_and_slide(velocity*speed)
+		STATE.CHARGING:
+			move_and_slide(velocity*speed)
+			velocity = velocity.linear_interpolate(Vector2(),acceleration*delta)
 		STATE.ATTACK_DASHING:
 			move_and_slide(last_dir*trident_dash_speed)
 			trident_dash_distance_left -= delta*trident_dash_speed
@@ -98,12 +118,14 @@ func basic_attack():
 	puc.player = player
 
 func hit(damage: float):
+	if frozen: return
 	health -= damage
 	if health <= 0:
 		death()
 	ui.update_ui(health)
 
 func death():
+	Global.emit_signal("gameover")
 	var death_screen = preload("res://ui/gameover.tscn").instance()
 	Global.add_child(death_screen)
 	death_screen.set_message(name + " je pobedio :D")
@@ -111,3 +133,5 @@ func death():
 func restart():
 	frozen = false
 	health = max_health
+	ui.update_ui(health)
+

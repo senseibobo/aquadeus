@@ -44,3 +44,4 @@ margin_bottom = 32.0
 value = 100.0
 
 [node name="Trident" parent="." instance=ExtResource( 3 )]
+player = 2
