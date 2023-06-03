@@ -19,7 +19,17 @@ func _ready():
 func attack():
 	if attacking: return
 	attacking = true
-	$AnimationPlayer.play("attack")
+	#$AnimationPlayer.play("attack")
+	var tween = create_tween()
+	tween.tween_callback(self,"emit_signal",["start_charging"])
+	tween.tween_property($Trident,"position", Vector2(-25,16), 0.6)
+	tween.tween_callback(self,"emit_signal",["stab"])
+	tween.tween_property($Trident,"position", Vector2(40,16), 0.1)
+	tween.tween_callback(self,"emit_signal",["stabbed"])
+	tween.tween_interval(0.3)
+	tween.tween_callback(self,"emit_signal",["returning"])
+	tween.tween_property($Trident,"position",Vector2(0,16),0.2)
+	tween.tween_callback(self,"emit_signal",["returned"])
 	
 func _returned():
 	attacking = false

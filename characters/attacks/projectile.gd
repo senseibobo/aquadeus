@@ -22,7 +22,7 @@ func on_hit(body):
 		print(str(player) + " hit " + str(body.player))
 		if body.player != player:
 			print("hit")
-			body.hit(5)
+			body.hit(damage)
 			queue_free()
 	else:
 		queue_free()

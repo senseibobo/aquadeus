@@ -46,6 +46,8 @@ var dash_cooldown_remaining: float = 0.0
 var last_move_dir: Vector2 = Vector2.RIGHT
 var last_dir: Vector2
 
+var fish: Array = [null,null,null,null,null]
+
 func _ready():
 	trident.connect("returning",self,"trident_returned")
 	trident.connect("stab",self,"trident_stabbing")
@@ -170,9 +172,18 @@ func death():
 	death_screen.set_message(("Neptun" if name == "Poseidon" else "Poseidon") + " je pobedio :D")
 
 func restart():
+	velocity = Vector2()
 	frozen = false
 	state = STATE.FREE
 	basic_charging = false
 	health = max_health
 	ui.update_ui(health)
+
+func acquire_fish(fish: Fish):
+	for i in 5:
+		if self.fish[i] == null:
+			self.fish[i] = fish
+			ui.fill_fish(self.fish)
+			return true
+	return false
 

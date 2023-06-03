@@ -40,29 +40,87 @@ texture = ExtResource( 4 )
 script = ExtResource( 2 )
 multiplier = -1.0
 
-[node name="TextureRect3" type="TextureRect" parent="UI"]
+[node name="Under" type="TextureRect" parent="UI"]
 modulate = Color( 0.309804, 0.309804, 0.309804, 1 )
-margin_left = 1763.0
-margin_top = 32.0
-margin_right = 2414.0
-margin_bottom = 93.0
+margin_left = 1796.0
+margin_top = 26.0
+margin_right = 2316.8
+margin_bottom = 74.8
+rect_scale = Vector2( -1, 1 )
+texture = ExtResource( 6 )
+expand = true
+
+[node name="Damage" type="TextureRect" parent="UI"]
+modulate = Color( 0.992157, 0.698039, 0.258824, 1 )
+margin_left = 1796.0
+margin_top = 26.0
+margin_right = 2316.8
+margin_bottom = 74.8
 rect_scale = Vector2( -1, 1 )
 texture = ExtResource( 6 )
 expand = true
 
 [node name="Healthbar" type="TextureRect" parent="UI"]
 modulate = Color( 0.823529, 0.192157, 0, 1 )
-margin_left = 1763.0
-margin_top = 32.0
-margin_right = 2414.0
-margin_bottom = 93.0
+margin_left = 1796.0
+margin_top = 26.0
+margin_right = 2316.8
+margin_bottom = 74.8
 rect_scale = Vector2( -1, 1 )
 texture = ExtResource( 6 )
 expand = true
 
-[node name="TextureRect" type="TextureRect" parent="UI"]
+[node name="Overlay" type="TextureRect" parent="UI"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -895.0
-margin_bottom = 40.0
+margin_left = -719.0
+margin_right = -4.59998
+margin_bottom = 177.6
 texture = ExtResource( 5 )
+expand = true
+
+[node name="Fish" type="HBoxContainer" parent="UI"]
+margin_left = 1623.0
+margin_top = 77.0
+margin_right = 1764.0
+margin_bottom = 117.0
+alignment = 2
+
+[node name="TextureRect1" type="TextureRect" parent="UI/Fish"]
+margin_right = 25.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 25, 40 )
+size_flags_horizontal = 3
+expand = true
+
+[node name="TextureRect2" type="TextureRect" parent="UI/Fish"]
+margin_left = 29.0
+margin_right = 54.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 25, 40 )
+size_flags_horizontal = 3
+expand = true
+
+[node name="TextureRect3" type="TextureRect" parent="UI/Fish"]
+margin_left = 58.0
+margin_right = 83.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 25, 40 )
+size_flags_horizontal = 3
+expand = true
+
+[node name="TextureRect4" type="TextureRect" parent="UI/Fish"]
+margin_left = 87.0
+margin_right = 112.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 25, 40 )
+size_flags_horizontal = 3
+expand = true
+
+[node name="TextureRect5" type="TextureRect" parent="UI/Fish"]
+margin_left = 116.0
+margin_right = 141.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 25, 40 )
+size_flags_horizontal = 3
+expand = true
