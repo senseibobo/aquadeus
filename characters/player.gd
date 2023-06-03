@@ -102,6 +102,7 @@ func release_basic_attack():
 	puc.speed *= (1.0+charge_amount*0.5)
 	puc.damage *= (1.0+charge_amount*2.0)
 	puc.scale = Vector2.ONE*(1.0+charge_amount)
+	puc.rotation = dir.angle()
 	charge_amount = 0
 	
 

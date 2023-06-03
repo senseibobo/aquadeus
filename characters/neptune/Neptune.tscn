@@ -28,7 +28,6 @@ dash_control = "p1_dash"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2( 6.99383e-08, 0.400001 )
-scale = Vector2( 1, 1 )
 polygon = PoolVector2Array( 20.4, -21.2, 3.98648e-06, -23.2, -19.6, -13.2, -17.6, 6.8, 1.6, 17.2, 21.6, -1.2 )
 
 [node name="Sprite" type="Sprite" parent="CollisionPolygon2D"]

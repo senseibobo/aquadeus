@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://characters/attacks/projectile.gd" type="Script" id=1]
+[ext_resource path="res://characters/attacks/basic_attack.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 12.0
@@ -10,14 +11,12 @@ collision_layer = 4
 collision_mask = 3
 script = ExtResource( 1 )
 
-[node name="ColorRect" type="ColorRect" parent="."]
-margin_left = -13.0
-margin_top = -13.0
-margin_right = 13.0
-margin_bottom = 13.0
-color = Color( 1, 0, 0, 1 )
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="BasicAttack" type="Sprite" parent="."]
+position = Vector2( 0, 2 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 2 )
 
 [connection signal="body_entered" from="." to="." method="on_hit"]

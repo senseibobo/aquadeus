@@ -15,7 +15,7 @@ func _process(delta):
 		fish.fish = [preload("res://fish/swordfish.tres")][randi()%1]
 		var x = 1920/2 + 500+200*randf()
 		fish.global_position = Vector2(x,-100)
-		fish.get_node("Sprite").texture = fish.fish.texture
+		fish.get_node("Riba1").texture = fish.fish.texture
 		add_child(fish)
 
 func restart():
