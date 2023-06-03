@@ -5,12 +5,13 @@ enum STATE {
 	FREE,
 	CHARGING,
 	ATTACKING,
-	ATTACK_DASHING
+	ATTACK_DASHING,
+	DASHING
 }
 
 var state: int = STATE.FREE
 
-var speed: float = 460.0
+var speed: float = 780.0
 var frozen: bool = false
 
 export(int,1,2) var player: int
