@@ -11,18 +11,21 @@ var attacking: bool = false
 export(int,1,2) var player = 1
 
 func _ready():
+	connect("returning",self,"_returning")
 	connect("returned",self,"_returned")
+	connect("stab",$Trident/Hitbox,"set_deferred",["monitoring",true])
 	Global.connect("gameover",self,"game_over")
 
 func attack():
 	if attacking: return
 	attacking = true
-	$Trident/Hitbox.set_deferred("monitoring",true)
 	$AnimationPlayer.play("attack")
-
+	
 func _returned():
-	$Trident/Hitbox.set_deferred("monitoring",false)
 	attacking = false
+
+func _returning():
+	$Trident/Hitbox.set_deferred("monitoring",false)
 
 func restart():
 	$Trident/Hitbox.set_deferred("monitoring",false)

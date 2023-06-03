@@ -19,7 +19,9 @@ func _physics_process(delta):
 
 func on_hit(body):
 	if body is Player:
+		print(str(player) + " hit " + str(body.player))
 		if body.player != player:
+			print("hit")
 			body.hit(5)
 			queue_free()
 	else:

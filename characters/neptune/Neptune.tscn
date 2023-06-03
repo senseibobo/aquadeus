@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://characters/neptune/neptune.gd" type="Script" id=1]
 [ext_resource path="res://characters/characterUI.gd" type="Script" id=2]
 [ext_resource path="res://characters/Trident.tscn" type="PackedScene" id=3]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 16, 16 )
+[ext_resource path="res://characters/neptune/neptune.png" type="Texture" id=4]
+[ext_resource path="res://characters/neptune/healthbar_right.png" type="Texture" id=5]
+[ext_resource path="res://characters/poseidon/healthbar_left_under.png" type="Texture" id=6]
 
 [node name="Neptune" type="KinematicBody2D"]
 scale = Vector2( 2.5, 2.5 )
@@ -24,22 +24,45 @@ basic_attack_control = "p1_basic_attack"
 melee_attack_control = "p1_melee_attack"
 dash_control = "p1_dash"
 
-[node name="ColorRect" type="ColorRect" parent="."]
-margin_left = -16.0
-margin_top = -16.0
-margin_right = 16.0
-margin_bottom = 16.0
-color = Color( 0.0196078, 0.67451, 0.415686, 1 )
+[node name="Trident" parent="." instance=ExtResource( 3 )]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( 6.99383e-08, 0.400001 )
+scale = Vector2( 1, 1 )
+polygon = PoolVector2Array( 20.4, -21.2, 3.98648e-06, -23.2, -19.6, -13.2, -17.6, 6.8, 1.6, 17.2, 21.6, -1.2 )
+
+[node name="Sprite" type="Sprite" parent="CollisionPolygon2D"]
+position = Vector2( -7.10543e-15, -0.400001 )
+scale = Vector2( 0.18, 0.18 )
+texture = ExtResource( 4 )
 
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource( 2 )
+multiplier = -1.0
 
-[node name="Health" type="ProgressBar" parent="UI"]
-margin_right = 301.0
-margin_bottom = 32.0
-value = 100.0
+[node name="TextureRect3" type="TextureRect" parent="UI"]
+modulate = Color( 0.309804, 0.309804, 0.309804, 1 )
+margin_left = 1763.0
+margin_top = 32.0
+margin_right = 2414.0
+margin_bottom = 93.0
+rect_scale = Vector2( -1, 1 )
+texture = ExtResource( 6 )
+expand = true
 
-[node name="Trident" parent="." instance=ExtResource( 3 )]
+[node name="Healthbar" type="TextureRect" parent="UI"]
+modulate = Color( 0.823529, 0.192157, 0, 1 )
+margin_left = 1763.0
+margin_top = 32.0
+margin_right = 2414.0
+margin_bottom = 93.0
+rect_scale = Vector2( -1, 1 )
+texture = ExtResource( 6 )
+expand = true
+
+[node name="TextureRect" type="TextureRect" parent="UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -895.0
+margin_bottom = 40.0
+texture = ExtResource( 5 )

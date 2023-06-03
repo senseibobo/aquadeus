@@ -60,7 +60,7 @@ func trident_returned():
 
 func _process(delta):
 	
-	print(name + " " + str(state))
+	#print(name + " " + str(state))
 	if frozen: return
 	dash_cooldown_remaining -= delta
 	if basic_charging:
@@ -77,10 +77,12 @@ func _process(delta):
 			if Input.is_action_just_pressed(melee_attack_control) and not trident.attacking:
 				trident.attack()
 				state = STATE.CHARGING
+				set_angle(last_dir.angle())
 			elif Input.is_action_just_pressed(dash_control) and dash_cooldown_remaining <= 0.0:
 				state = STATE.DASHING
 				dash_cooldown_remaining = dash_cooldown
-				velocity = last_move_dir*2.0
+				velocity = last_dir*2.0
+				set_angle(last_dir.angle())
 		STATE.CHARGING:
 			get_aim_dir()
 
@@ -89,6 +91,7 @@ func release_basic_attack():
 	var dir = get_aim_dir()
 	if dir == Vector2():
 		dir = last_dir
+#	var dir = velocity.normalized()
 	var puc = load("res://characters/attacks/basic.tscn").instance()
 	get_parent().add_child(puc)
 	puc.global_position = global_position
@@ -99,6 +102,10 @@ func release_basic_attack():
 	puc.scale = Vector2.ONE*(1.0+charge_amount)
 	charge_amount = 0
 	
+
+func set_angle(angle):
+	$CollisionPolygon2D.rotation = angle - PI/2.0
+	trident.rotation = angle
 
 func _physics_process(delta):
 	if frozen: return
@@ -114,10 +121,12 @@ func _physics_process(delta):
 			velocity.y = lerp(velocity.y, -5, 10.0*delta)
 	match state:
 		STATE.FREE:
+			#set_angle(velocity.angle())
 			var move_vec = get_move_dir()
 			velocity = velocity.linear_interpolate(move_vec,acceleration*delta)
 			move_and_slide(velocity*speed)
 		STATE.CHARGING:
+			set_angle(last_dir.angle())
 			move_and_slide(velocity*speed)
 			velocity = velocity.linear_interpolate(Vector2(),acceleration*delta)
 		STATE.ATTACK_DASHING:
@@ -135,7 +144,6 @@ func get_move_dir():
 	var move_vec = Vector2(h_move/2.0,v_move/2.0).normalized()
 	if move_vec != Vector2():
 		last_move_dir = move_vec
-		#sprite.rotation = move_vec.angle()
 	return move_vec
 
 func get_aim_dir():
@@ -143,7 +151,7 @@ func get_aim_dir():
 	var v_dir = Input.get_axis(aim_up_control,aim_down_control)
 	var dir = Vector2(h_dir/2.0,v_dir/2.0).normalized()
 	if dir != Vector2():
-		trident.rotation = dir.angle()
+		set_angle(dir.angle())
 		last_dir = dir
 	return dir
 
@@ -159,10 +167,11 @@ func death():
 	Global.emit_signal("gameover")
 	var death_screen = preload("res://ui/gameover.tscn").instance()
 	Global.add_child(death_screen)
-	death_screen.set_message(name + " je pobedio :D")
+	death_screen.set_message(("Neptun" if name == "Poseidon" else "Poseidon") + " je pobedio :D")
 
 func restart():
 	frozen = false
+	state = STATE.FREE
 	basic_charging = false
 	health = max_health
 	ui.update_ui(health)

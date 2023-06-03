@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://characters/neptune/Neptune.tscn" type="PackedScene" id=1]
 [ext_resource path="res://characters/poseidon/Poseidon.tscn" type="PackedScene" id=2]
 [ext_resource path="res://arena/Arena.gd" type="Script" id=3]
 [ext_resource path="res://arena/pozadina.png" type="Texture" id=4]
+[ext_resource path="res://icon.png" type="Texture" id=5]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -58,6 +59,32 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
 
+[sub_resource type="ConvexPolygonShape2D" id=4]
+points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
+
+[sub_resource type="TileSet" id=3]
+0/name = "icon.png 0"
+0/texture = ExtResource( 5 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 64, 64 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape = SubResource( 4 )
+0/shape_one_way = false
+0/shape_one_way_margin = 1.0
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 4 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+
 [node name="Arena" type="Node2D"]
 script = ExtResource( 3 )
 
@@ -70,7 +97,6 @@ position = Vector2( 159, 322 )
 
 [node name="Poseidon" parent="." instance=ExtResource( 2 )]
 position = Vector2( 884, 309 )
-player = 0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -79,3 +105,9 @@ visible = false
 material = SubResource( 2 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="TileMap" type="TileMap" parent="."]
+scale = Vector2( 0.5, 0.5 )
+tile_set = SubResource( 3 )
+format = 1
+tile_data = PoolIntArray( 327698, 0, 0, 393234, 0, 0, 393235, 0, 0, 393256, 0, 0, 458770, 0, 0, 458771, 0, 0, 458772, 0, 0, 458792, 0, 0, 458793, 0, 0, 458794, 0, 0, 524307, 0, 0, 524308, 0, 0, 524309, 0, 0, 524328, 0, 0, 524329, 0, 0, 524330, 0, 0, 589843, 0, 0, 589844, 0, 0, 589845, 0, 0, 589863, 0, 0, 589864, 0, 0, 589865, 0, 0, 589866, 0, 0, 655379, 0, 0, 655380, 0, 0, 655381, 0, 0, 655399, 0, 0, 655400, 0, 0, 655401, 0, 0, 655402, 0, 0, 720915, 0, 0, 720916, 0, 0, 720917, 0, 0, 720936, 0, 0, 720937, 0, 0, 720938, 0, 0, 786451, 0, 0, 786452, 0, 0, 786453, 0, 0, 786472, 0, 0, 786473, 0, 0, 851988, 0, 0, 1245197, 0, 0, 1245198, 0, 0, 1245221, 0, 0, 1310733, 0, 0, 1310734, 0, 0, 1310735, 0, 0, 1310756, 0, 0, 1310757, 0, 0, 1376269, 0, 0, 1376270, 0, 0, 1376271, 0, 0, 1376292, 0, 0, 1376293, 0, 0, 1441805, 0, 0, 1441806, 0, 0, 1441807, 0, 0, 1441828, 0, 0, 1441829, 0, 0, 1507341, 0, 0, 1507342, 0, 0, 1507343, 0, 0, 1507363, 0, 0, 1507364, 0, 0, 1507365, 0, 0, 1572877, 0, 0, 1572878, 0, 0, 1572879, 0, 0, 1572899, 0, 0, 1572900, 0, 0, 1638414, 0, 0, 1638435, 0, 0, 1638436, 0, 0, 1703950, 0, 0, 1703971, 0, 0, 1703972, 0, 0, 1769507, 0, 0, 1769508, 0, 0, 1835044, 0, 0 )
