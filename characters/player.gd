@@ -74,6 +74,7 @@ func _process(delta):
 			get_aim_dir()
 			if Input.is_action_just_pressed(basic_attack_control):
 				basic_charging = true
+				$Trident/ChargeAttackParticles.emitting = true
 			elif Input.is_action_just_released(basic_attack_control):
 				release_basic_attack()
 			if Input.is_action_just_pressed(melee_attack_control) and not trident.attacking:
@@ -89,6 +90,8 @@ func _process(delta):
 			get_aim_dir()
 
 func release_basic_attack():
+	$Trident/ChargeAttackParticles.restart()
+	$Trident/ChargeAttackParticles.emitting = false
 	basic_charging = false
 	var dir = get_aim_dir()
 	if dir == Vector2():

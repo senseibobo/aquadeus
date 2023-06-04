@@ -5,7 +5,7 @@ func _ready():
 	restart()
 
 var fish_timer: float
-var fish_cd: float = 3.0
+var fish_cd: float = 7.0
 
 func _process(delta):
 	fish_timer -= delta
@@ -13,7 +13,7 @@ func _process(delta):
 		fish_timer += fish_cd
 		var fish = preload("res://fish/fishpickup.tscn").instance()
 		fish.fish = [preload("res://fish/swordfish.tres")][randi()%1]
-		var x = 1920/2 + 500+200*randf()
+		var x = 1920/2 -250 + 500*randf()
 		fish.global_position = Vector2(x,-100)
 		fish.get_node("Riba1").texture = fish.fish.texture
 		add_child(fish)

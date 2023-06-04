@@ -23,6 +23,14 @@ func on_hit(body):
 		if body.player != player:
 			print("hit")
 			body.hit(damage)
-			queue_free()
+			death()
 	else:
-		queue_free()
+		death()
+
+func death():
+	var particles = $Particles2D
+	remove_child(particles)
+	get_parent().add_child(particles)
+	get_tree().create_timer(0.3).connect("timeout",particles,"queue_free")
+	queue_free()
+		
