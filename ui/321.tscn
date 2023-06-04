@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
-[ext_resource path="res://fish/swordfish.png" type="Texture" id=2]
-[ext_resource path="res://ui/win_coin.png" type="Texture" id=3]
-[ext_resource path="res://ui/Text_button.png" type="Texture" id=4]
+[ext_resource path="res://ui/dva.png" type="Texture" id=1]
+[ext_resource path="res://ui/FIGHT.png" type="Texture" id=2]
+[ext_resource path="res://ui/jedan.png" type="Texture" id=3]
+[ext_resource path="res://ui/tri.png" type="Texture" id=4]
+[ext_resource path="res://ui/321.gd" type="Script" id=5]
 
 [sub_resource type="Animation" id=1]
 resource_name = "321fight"
@@ -103,15 +104,15 @@ tracks/3/keys = {
 
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
-"frames": [ ExtResource( 1 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
+"frames": [ ExtResource( 4 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 2 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
 
-[node name="Control" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="321fight" type="CanvasLayer"]
+layer = 5
+script = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "321fight"
@@ -122,3 +123,5 @@ anims/RESET = SubResource( 2 )
 position = Vector2( 960, 540 )
 scale = Vector2( 1e-05, 1e-05 )
 frames = SubResource( 3 )
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="start_round"]

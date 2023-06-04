@@ -18,6 +18,7 @@ func _ready():
 
 func attack():
 	if attacking: return
+	Global.play_sound(preload("res://sfx/melee_lunge_with_wind_up.mp3"))
 	attacking = true
 	#$AnimationPlayer.play("attack")
 	var tween = create_tween()
@@ -46,5 +47,7 @@ func game_over():
 func on_hit(body):
 	if body is Player:
 		if body != get_parent():
+			
+			Global.play_sound(preload("res://sfx/melee_attack_hit.mp3"))
 			print(str(get_parent().name) + " je udario " + body.name)
 			body.hit(20)

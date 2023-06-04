@@ -11,3 +11,8 @@ func set_message(message: String):
 		$AnimationPlayer.play("Neptune")
 	else:
 		$AnimationPlayer.play("Poseidon")
+
+
+func animation_finished(anim_name):
+	Global.emit_signal("restart")
+	queue_free()

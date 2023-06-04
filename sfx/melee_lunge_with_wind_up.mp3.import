@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/melee_lunge_with_wind_up.mp3-32fbea642df5936bbba47c08df4ea37e.mp3str"
+
+[deps]
+
+source_file="res://sfx/melee_lunge_with_wind_up.mp3"
+dest_files=[ "res://.import/melee_lunge_with_wind_up.mp3-32fbea642df5936bbba47c08df4ea37e.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -3,16 +3,23 @@ extends Node2D
 func _ready():
 	Global.connect("restart",self,"restart")
 	restart()
-	trigger_mojsije()
 	voda_start.append($VodaLevo.global_position)
 	voda_start.append($VodaDesno.global_position)
+
+var mojsije_timer: float = 23.0
 
 var voda_start = []
 
 var fish_timer: float
 var fish_cd: float = 7.0
+var game_active: bool = false
 
 func _process(delta):
+	if not game_active: return
+	mojsije_timer -= delta
+	if mojsije_timer <= 0:
+		mojsije_timer += 36.0 + randf()*12
+		trigger_mojsije()
 	fish_timer -= delta
 	if fish_timer <= 0:
 		fish_timer += fish_cd
@@ -24,6 +31,9 @@ func _process(delta):
 		add_child(fish)
 
 func restart():
+	mojsije_timer = 20.0
+	var fight321 = preload("res://ui/321.tscn").instance()
+	add_child(fight321)
 	if mojsije_tween:
 		mojsije_tween.stop()
 	if voda_start.size() > 0:

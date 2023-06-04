@@ -6,7 +6,7 @@ export var player: int
 export var speed: float = 1500.0
 export var deceleration: float = 1400.0
 export var direction: Vector2 = Vector2(1,1)
-export var damage: float = 5.0
+export(float,0.0,100.0) var damage: float = 5.0
 
 func _ready():
 	Global.connect("restart",self,"queue_free")

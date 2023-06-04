@@ -14,7 +14,7 @@ var state: int = STATE.FREE
 
 var charge_amount: float = 0.0
 var speed: float = 780.0
-var frozen: bool = false
+var frozen: bool = true
 
 var wins: int = 0
 
@@ -54,6 +54,7 @@ var last_dir: Vector2
 var fish: Array = []
 
 func _ready():
+	Global.connect("roundstart",self,"round_start")
 	trident.connect("returning",self,"trident_returned")
 	trident.connect("stab",self,"trident_stabbing")
 	Global.players[player] = self
@@ -107,9 +108,11 @@ func eat_fish():
 	get_tree().create_timer(0.6).connect("timeout",self,"set",["state",STATE.FREE])
 	ui.update_ui(health)
 	ui.fill_fish(fish)
+	Global.play_sound(preload("res://sfx/consume_final.mp3"))
 	$CollisionPolygon2D/EatParticles.emitting = true
 
 func release_basic_attack():
+	Global.play_sound(preload("res://sfx/Basic_atk_2.mp3"),0.14)
 	$Trident/ChargeAttackParticles.restart()
 	$Trident/ChargeAttackParticles.emitting = false
 	basic_charging = false
@@ -122,6 +125,7 @@ func release_basic_attack():
 	puc.global_position = global_position
 	puc.direction = dir
 	puc.player = player
+	if Global.mojsije_split: charge_amount = 1
 	puc.speed *= (1.0+charge_amount*0.5)
 	puc.damage *= (1.0+charge_amount*2.0)
 	puc.scale = Vector2.ONE*(1.0+charge_amount)
@@ -199,6 +203,7 @@ func get_aim_dir():
 func hit(damage: float):
 	if frozen: return
 	if state == STATE.DASHING: return
+	Global.play_sound(preload("res://sfx/spflash_sound.mp3"))
 	health -= damage
 	if health <= 0:
 		death()
@@ -206,18 +211,24 @@ func hit(damage: float):
 
 func death():
 	Global.emit_signal("gameover")
-	var death_screen = preload("res://ui/gameover.tscn").instance()
-	Global.add_child(death_screen)
-	print(Global.players)
-	
-	death_screen.set_message(Global.players[3-player].name + " je pobedio :D")
 	Global.players[3-player].wins += 1
-	Global.players[3-player].ui.update_wins(wins)
+	Global.players[3-player].ui.update_wins(Global.players[3-player].wins)
+	if Global.players[3-player].wins == 2:
+		var game_over = preload("res://ui/gameend.tscn").instance()
+		game_over.winner = 3-player
+		Global.add_child(game_over)
+		Global.players = {}
+	else:
+		var death_screen = preload("res://ui/gameover.tscn").instance()
+		Global.add_child(death_screen)
+		print(Global.players)
+		
+		death_screen.set_message(Global.players[3-player].name + " je pobedio :D")
+		Global.players[3-player].ui.update_wins(wins)
 	
 
 func restart():
 	velocity = Vector2()
-	frozen = false
 	state = STATE.FREE
 	basic_charging = false
 	health = max_health
@@ -225,6 +236,9 @@ func restart():
 	fish = []
 	ui.fill_fish([])
 	ui.update_wins(wins)
+	
+func round_start():
+	frozen = false
 
 func acquire_fish(fish: Fish):
 	if self.fish.size() < 5:

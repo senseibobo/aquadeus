@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/melee_lunge_sa_lowpass_final.mp3-da87118fb83d4ff821aab14af04b9ae1.mp3str"
+
+[deps]
+
+source_file="res://sfx/melee_lunge_sa_lowpass_final.mp3"
+dest_files=[ "res://.import/melee_lunge_sa_lowpass_final.mp3-da87118fb83d4ff821aab14af04b9ae1.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

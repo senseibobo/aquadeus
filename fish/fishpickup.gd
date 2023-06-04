@@ -17,3 +17,4 @@ func _physics_process(delta):
 func _on_FishPickup_body_entered(body):
 	if body.acquire_fish(fish):
 		queue_free()
+		Global.play_sound(preload("res://sfx/collect_sfx_final.ogg"))
