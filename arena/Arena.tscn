@@ -152,26 +152,26 @@ scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 7 )
 
 [node name="VodaLevo" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0.392157 )
+self_modulate = Color( 1, 1, 1, 0.392157 )
 position = Vector2( 480, 540 )
 z_index = 21
 texture = ExtResource( 10 )
 
-[node name="MojsijePutic2" type="Sprite" parent="."]
-visible = false
-position = Vector2( 910, 540 )
+[node name="MojsijePutic" type="Sprite" parent="VodaLevo"]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 430, 0 )
 z_index = 23
 texture = ExtResource( 9 )
 
 [node name="VodaDesno" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0.392157 )
+self_modulate = Color( 1, 1, 1, 0.392157 )
 position = Vector2( 1440, 540 )
 z_index = 21
 texture = ExtResource( 11 )
 
-[node name="MojsijePutic" type="Sprite" parent="."]
-visible = false
-position = Vector2( 1010, 540 )
+[node name="MojsijePutic" type="Sprite" parent="VodaDesno"]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( -430, 0 )
 rotation = -3.14159
 z_index = 23
 texture = ExtResource( 9 )

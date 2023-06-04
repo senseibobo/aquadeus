@@ -32,6 +32,8 @@ export var aim_right_control: String
 export var basic_attack_control: String
 export var melee_attack_control: String
 export var dash_control: String
+export var fish_throw_control: String
+export var fish_eat_control: String
 
 export var trident_dash_speed: float = 1200.0
 export var trident_dash_distance: float = 150.0
@@ -46,7 +48,7 @@ var dash_cooldown_remaining: float = 0.0
 var last_move_dir: Vector2 = Vector2.RIGHT
 var last_dir: Vector2
 
-var fish: Array = [null,null,null,null,null]
+var fish: Array = []
 
 func _ready():
 	trident.connect("returning",self,"trident_returned")
@@ -184,10 +186,10 @@ func restart():
 	ui.update_ui(health)
 
 func acquire_fish(fish: Fish):
-	for i in 5:
-		if self.fish[i] == null:
-			self.fish[i] = fish
-			ui.fill_fish(self.fish)
-			return true
-	return false
+	if self.fish.size() < 5:
+		self.fish.append(fish)
+		ui.fill_fish(self.fish)
+		return true
+	else:
+		return false
 

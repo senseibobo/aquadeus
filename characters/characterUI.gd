@@ -9,12 +9,14 @@ func update_ui(health: float):
 	print($Damage.rect_scale.x)
 
 func fill_fish(fish_array):
+	for child in $Fish.get_children():
+		child.texture = null
 	var i = 0
+	print(fish_array)
 	for fish in fish_array:
 		if fish:
 			$Fish.get_child(i).texture = fish.texture
-		else:
-			$Fish.get_child(i).texture = null
+		i += 1
 			
 
 func _process(delta):
