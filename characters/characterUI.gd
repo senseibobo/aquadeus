@@ -18,6 +18,11 @@ func fill_fish(fish_array):
 			$Fish.get_child(i).texture = fish.icon_texture
 		i += 1
 			
+func update_wins(wins: int):
+	for child in $Wins.get_children():
+		child.visible = false
+	for i in wins:
+		$Wins.get_child(i).visible = true
 
 func _process(delta):
 	$Damage.rect_scale.x = lerp($Damage.rect_scale.x,$Healthbar.rect_scale.x,3.0*delta)

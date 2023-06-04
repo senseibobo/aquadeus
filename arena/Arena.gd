@@ -4,6 +4,10 @@ func _ready():
 	Global.connect("restart",self,"restart")
 	restart()
 	trigger_mojsije()
+	voda_start.append($VodaLevo.global_position)
+	voda_start.append($VodaDesno.global_position)
+
+var voda_start = []
 
 var fish_timer: float
 var fish_cd: float = 7.0
@@ -20,33 +24,43 @@ func _process(delta):
 		add_child(fish)
 
 func restart():
+	if mojsije_tween:
+		mojsije_tween.stop()
+	if voda_start.size() > 0:
+		$VodaLevo.global_position = voda_start[0]
+		$VodaDesno.global_position = voda_start[1]
+	$VodaDesno/MojsijePutic.modulate.a = 0.0
+	$VodaLevo/MojsijePutic.modulate.a = 0.0
 	$Neptun.global_position = Vector2(1920,1080)/2.0 + Vector2(500,0)
 	$Poseidon.global_position = Vector2(1920,1080)/2.0 + Vector2(-500,0)
 	$Neptun.restart()
 	$Poseidon.restart()
+	Global.mojsije_split = false
+
+var mojsije_tween: SceneTreeTween
 
 func trigger_mojsije():
 	var incoming = preload("res://ui/mojsijeincoming.tscn").instance()
 	add_child(incoming)
 	yield(incoming,"done")
-	var tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property($VodaLevo/MojsijePutic,"modulate:a",1.0,0.6)
-	tween.tween_property($VodaDesno/MojsijePutic,"modulate:a",1.0,0.6)
-	tween.chain()
-	tween.tween_property($VodaLevo,"global_position",$VodaLevo.global_position - Vector2(130,0),2.0)
-	tween.tween_property($VodaDesno,"global_position",$VodaDesno.global_position + Vector2(130,0),2.0)
-	tween.tween_interval(1.0)
-	tween.tween_callback(self,"mojsije_walk")
-	tween.tween_property(Global,"mojsije_split",true,0)
-	tween.chain()
-	tween.tween_interval(14.0)
-	tween.chain()
-	tween.tween_property(Global,"mojsije_split",false,0)
-	tween.tween_property($VodaLevo,"global_position",$VodaLevo.global_position,2.0)
-	tween.tween_property($VodaDesno,"global_position",$VodaDesno.global_position,2.0)
-	tween.chain()
-	tween.tween_property($VodaLevo/MojsijePutic,"modulate:a",0.0,0.6)
-	tween.tween_property($VodaDesno/MojsijePutic,"modulate:a",0.0,0.6)
+	mojsije_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	mojsije_tween.tween_property($VodaLevo/MojsijePutic,"modulate:a",1.0,0.6)
+	mojsije_tween.tween_property($VodaDesno/MojsijePutic,"modulate:a",1.0,0.6)
+	mojsije_tween.chain()
+	mojsije_tween.tween_property($VodaLevo,"global_position",$VodaLevo.global_position - Vector2(130,0),2.0)
+	mojsije_tween.tween_property($VodaDesno,"global_position",$VodaDesno.global_position + Vector2(130,0),2.0)
+	mojsije_tween.tween_interval(1.0)
+	mojsije_tween.tween_callback(self,"mojsije_walk")
+	mojsije_tween.tween_property(Global,"mojsije_split",true,0)
+	mojsije_tween.chain()
+	mojsije_tween.tween_interval(14.0)
+	mojsije_tween.chain()
+	mojsije_tween.tween_property(Global,"mojsije_split",false,0)
+	mojsije_tween.tween_property($VodaLevo,"global_position",$VodaLevo.global_position,2.0)
+	mojsije_tween.tween_property($VodaDesno,"global_position",$VodaDesno.global_position,2.0)
+	mojsije_tween.chain()
+	mojsije_tween.tween_property($VodaLevo/MojsijePutic,"modulate:a",0.0,0.6)
+	mojsije_tween.tween_property($VodaDesno/MojsijePutic,"modulate:a",0.0,0.6)
 	
 func mojsije_walk():
 	var mojsije = preload("res://characters/mojsije/mojsije.tscn").instance()

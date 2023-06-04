@@ -8,6 +8,9 @@ export var deceleration: float = 1400.0
 export var direction: Vector2 = Vector2(1,1)
 export var damage: float = 5.0
 
+func _ready():
+	Global.connect("restart",self,"queue_free")
+
 func _physics_process(delta):
 	#distance_left -= speed*delta
 #	if distance_left <= 0:

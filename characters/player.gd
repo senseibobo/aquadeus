@@ -6,7 +6,8 @@ enum STATE {
 	CHARGING,
 	ATTACKING,
 	ATTACK_DASHING,
-	DASHING
+	DASHING,
+	EATING
 }
 
 var state: int = STATE.FREE
@@ -15,7 +16,9 @@ var charge_amount: float = 0.0
 var speed: float = 780.0
 var frozen: bool = false
 
-export(int,1,2) var player: int
+var wins: int = 0
+
+export(int,1,2) var player: int = 1
 export var max_health: float = 100.0
 onready var health: float = max_health
 onready var ui: CanvasLayer = $UI
@@ -63,9 +66,10 @@ func trident_returned():
 	state = STATE.FREE
 
 func _process(delta):
-	
 	#print(name + " " + str(state))
 	if frozen: return
+	if Global.mojsije_split and abs(global_position.x-1920/2.0) < 150:
+		velocity = velocity.linear_interpolate(Vector2(),4*acceleration*delta)
 	dash_cooldown_remaining -= delta
 	if basic_charging:
 		charge_amount += delta
@@ -90,8 +94,20 @@ func _process(delta):
 				set_angle(last_dir.angle())
 			elif Input.is_action_just_pressed(fish_throw_control):
 				throw_fish()
+			elif Input.is_action_just_pressed(fish_eat_control):
+				eat_fish()
 		STATE.CHARGING:
 			get_aim_dir()
+
+func eat_fish():
+	if fish.size() == 0: return
+	fish.pop_front()
+	health = clamp(health + 20, 0, 100)
+	state = STATE.EATING
+	get_tree().create_timer(0.6).connect("timeout",self,"set",["state",STATE.FREE])
+	ui.update_ui(health)
+	ui.fill_fish(fish)
+	$CollisionPolygon2D/EatParticles.emitting = true
 
 func release_basic_attack():
 	$Trident/ChargeAttackParticles.restart()
@@ -159,6 +175,9 @@ func _physics_process(delta):
 			velocity = velocity.linear_interpolate(Vector2(),acceleration*delta)
 			if velocity.length() < 0.1:
 				state = STATE.FREE
+		STATE.EATING:
+			move_and_slide(velocity*speed)
+			velocity = velocity.linear_interpolate(Vector2(),2*acceleration*delta)
 
 func get_move_dir():
 	var h_move = Input.get_axis(move_left_control,move_right_control)
@@ -189,7 +208,12 @@ func death():
 	Global.emit_signal("gameover")
 	var death_screen = preload("res://ui/gameover.tscn").instance()
 	Global.add_child(death_screen)
-	death_screen.set_message(("Neptun" if name == "Poseidon" else "Poseidon") + " je pobedio :D")
+	print(Global.players)
+	
+	death_screen.set_message(Global.players[3-player].name + " je pobedio :D")
+	Global.players[3-player].wins += 1
+	Global.players[3-player].ui.update_wins(wins)
+	
 
 func restart():
 	velocity = Vector2()
@@ -200,6 +224,7 @@ func restart():
 	ui.update_ui(health)
 	fish = []
 	ui.fill_fish([])
+	ui.update_wins(wins)
 
 func acquire_fish(fish: Fish):
 	if self.fish.size() < 5:

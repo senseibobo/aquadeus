@@ -6,8 +6,8 @@ func _input(event):
 		queue_free()
 
 func set_message(message: String):
-	$VBoxContainer/Label2.text = message
+	#$VBoxContainer/Label2.text = message
 	if message.begins_with("Neptun"):
-		$TextureRect.texture = preload("res://ui/NEPTUNE_WINS.png")
+		$AnimationPlayer.play("Neptune")
 	else:
-		$TextureRect.texture = preload("res://ui/POSEIDON_WINS.png")
+		$AnimationPlayer.play("Poseidon")

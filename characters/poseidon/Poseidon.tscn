@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://characters/poseidon/poseidon.gd" type="Script" id=1]
 [ext_resource path="res://characters/characterUI.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://characters/poseidon/healthbar_left.png" type="Texture" id=6]
 [ext_resource path="res://characters/poseidon/healthbar_left_under.png" type="Texture" id=7]
 [ext_resource path="res://fish/swordfishIcon.png" type="Texture" id=8]
+[ext_resource path="res://ui/win_coin.png" type="Texture" id=9]
 
 [sub_resource type="Shader" id=5]
 code = "// NOTE: Shader automatically converted from Godot Engine 3.5.2.stable's ParticlesMaterial.
@@ -245,6 +246,27 @@ shader_param/trail_divisor = 1
 shader_param/gravity = Vector3( 0, -1e-06, 0 )
 shader_param/scale_texture = SubResource( 6 )
 
+[sub_resource type="Curve" id=9]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=12]
+curve = SubResource( 9 )
+
+[sub_resource type="ParticlesMaterial" id=11]
+emission_shape = 2
+emission_box_extents = Vector3( 16, 16, 1 )
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 207.92
+initial_velocity_random = 0.76
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 300.0
+scale = 2.21
+scale_curve = SubResource( 12 )
+color = Color( 0, 1, 0.141176, 0.443137 )
+
 [node name="Poseidon" type="KinematicBody2D"]
 scale = Vector2( 2.5, 2.5 )
 collision_layer = 2
@@ -285,13 +307,22 @@ process_material = SubResource( 8 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2( 6.99383e-08, 0.400001 )
-rotation = -1.5708
 polygon = PoolVector2Array( 20.4, -21.2, 3.98648e-06, -23.2, -19.6, -13.2, -17.6, 6.8, 1.6, 17.2, 21.6, -1.2 )
 
 [node name="Sprite" type="Sprite" parent="CollisionPolygon2D"]
 position = Vector2( -7.10543e-15, -0.400001 )
 scale = Vector2( 0.18, 0.18 )
 texture = ExtResource( 4 )
+
+[node name="EatParticles" type="Particles2D" parent="CollisionPolygon2D"]
+position = Vector2( 3.2, -3.6 )
+scale = Vector2( 1, 1 )
+emitting = false
+amount = 736
+lifetime = 0.66
+one_shot = true
+explosiveness = 0.74
+process_material = SubResource( 11 )
 
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource( 2 )
@@ -374,5 +405,43 @@ margin_bottom = 48.0
 rect_min_size = Vector2( 25, 40 )
 size_flags_horizontal = 3
 expand = true
+
+[node name="Wins" type="Control" parent="UI"]
+margin_left = 352.0
+margin_top = 88.0
+margin_right = 561.0
+margin_bottom = 155.0
+
+[node name="TextureRect" type="TextureRect" parent="UI/Wins"]
+margin_right = 67.0
+margin_bottom = 67.0
+rect_min_size = Vector2( 67, 67 )
+size_flags_horizontal = 2
+size_flags_vertical = 3
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 6
+
+[node name="TextureRect2" type="TextureRect" parent="UI/Wins"]
+margin_left = 71.0
+margin_right = 138.0
+margin_bottom = 67.0
+rect_min_size = Vector2( 67, 67 )
+size_flags_horizontal = 2
+size_flags_vertical = 3
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 6
+
+[node name="TextureRect3" type="TextureRect" parent="UI/Wins"]
+margin_left = 142.0
+margin_right = 209.0
+margin_bottom = 67.0
+rect_min_size = Vector2( 67, 67 )
+size_flags_horizontal = 2
+size_flags_vertical = 3
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 6
 
 [editable path="Trident"]
