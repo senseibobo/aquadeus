@@ -265,7 +265,6 @@ dash_control = "p1_dash"
 [node name="ChargeAttackParticles" type="Particles2D" parent="Trident"]
 visible = false
 position = Vector2( 35.6, 11.2 )
-scale = Vector2( 1, 1 )
 amount = 107
 lifetime = 1.43
 preprocess = 0.34
