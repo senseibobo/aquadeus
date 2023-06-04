@@ -6,9 +6,22 @@ signal roundstart
 var mojsije_split: bool = false
 var players = {}
 
+var music_player: AudioStreamPlayer = AudioStreamPlayer.new()
+
 func _ready():
+	add_child(music_player)
 	connect("gameover",self,"game_over")
 	connect("roundstart",self,"round_start")
+
+
+func play_music(music: AudioStream):
+	var tween = create_tween()
+	if music_player.playing:
+		tween.tween_property(music_player,"volume_db",-100.0,0.5)
+	tween.tween_callback(music_player,"stop")
+	tween.tween_property(music_player,"stream",music,0)
+	tween.tween_callback(music_player,"play")
+	tween.tween_property(music_player,"volume_db",-8.0,0.5)
 
 func _input(event):
 	if event.is_action_pressed("main_menu"):

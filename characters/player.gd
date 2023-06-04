@@ -210,6 +210,7 @@ func hit(damage: float):
 	ui.update_ui(health)
 
 func death():
+
 	Global.emit_signal("gameover")
 	Global.players[3-player].wins += 1
 	Global.players[3-player].ui.update_wins(Global.players[3-player].wins)

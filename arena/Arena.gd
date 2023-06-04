@@ -5,6 +5,9 @@ func _ready():
 	restart()
 	voda_start.append($VodaLevo.global_position)
 	voda_start.append($VodaDesno.global_position)
+	
+	Global.connect("gameover",self,"game_over")
+	Global.connect("roundstart",self,"round_start")
 
 var mojsije_timer: float = 23.0
 
@@ -13,6 +16,12 @@ var voda_start = []
 var fish_timer: float
 var fish_cd: float = 7.0
 var game_active: bool = false
+
+func game_over():
+	game_active = false
+
+func round_start():
+	game_active = true
 
 func _process(delta):
 	if not game_active: return

@@ -3,7 +3,9 @@ extends CanvasLayer
 var winner: int
 
 func _ready():
-	$AnimationPlayer.play("Neptune" if winner == 2 else "Poseidon")
+	var n = ["Neptune","Poseidon"][winner-1]
+	$AnimationPlayer.play(n)
+	$VBoxContainer/Label.text = n + " wins"
 
 func _input(event):
 	if event.is_action_pressed("restart"):

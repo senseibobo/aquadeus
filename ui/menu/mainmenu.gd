@@ -8,7 +8,8 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Play.grab_focus()
+	Global.play_music(preload("res://sfx/menumusic.mp3"))
+	$VBoxContainer/Buttons/Play.grab_focus()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -23,3 +24,8 @@ func _on_Play_pressed():
 
 func _on_Quit_pressed():
 	get_tree().quit()
+
+
+func _on_Controls_pressed():
+	$Controls.visible = true
+	print($Controls.visible)

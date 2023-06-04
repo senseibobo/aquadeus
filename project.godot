@@ -33,9 +33,11 @@ _global_script_class_icons={
 [application]
 
 config/name="project mojsije"
-run/main_scene="res://arena/Arena.tscn"
-boot_splash/image="res://ui/menu/menu_background.png"
-config/icon="res://icon.png"
+run/main_scene="res://ui/menu/mainmenu.tscn"
+boot_splash/image="res://ui/START_SCREEN.png"
+config/icon="res://arena/ikonica.png"
+config/macos_native_icon="res://arena/icon.icns"
+config/windows_native_icon="res://arena/icon.ico"
 
 [autoload]
 
