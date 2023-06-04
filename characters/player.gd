@@ -88,6 +88,8 @@ func _process(delta):
 				dash_cooldown_remaining = dash_cooldown
 				velocity = last_dir*2.0
 				set_angle(last_dir.angle())
+			elif Input.is_action_just_pressed(fish_throw_control):
+				throw_fish()
 		STATE.CHARGING:
 			get_aim_dir()
 
@@ -110,6 +112,18 @@ func release_basic_attack():
 	puc.rotation = dir.angle()
 	charge_amount = 0
 	
+func throw_fish():
+	if fish.size() == 0: return
+	else:
+		var f: Fish = fish[0]
+		fish.pop_front()
+		var projectile = load(f.throw_scene).instance()
+		projectile.dir = last_dir
+		projectile.player = player
+		get_parent().add_child(projectile)
+		projectile.global_position = global_position
+		projectile.rotation = last_dir.angle()
+		ui.fill_fish(fish)
 
 func set_angle(angle):
 	$CollisionPolygon2D.rotation = angle - PI/2.0
@@ -184,6 +198,8 @@ func restart():
 	basic_charging = false
 	health = max_health
 	ui.update_ui(health)
+	fish = []
+	ui.fill_fish([])
 
 func acquire_fish(fish: Fish):
 	if self.fish.size() < 5:

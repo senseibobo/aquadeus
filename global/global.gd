@@ -3,6 +3,7 @@ extends Node
 signal restart
 signal gameover
 
+var mojsije_split: bool = false
 var players = {}
 
 func _ready():

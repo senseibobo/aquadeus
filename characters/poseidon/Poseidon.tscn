@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://characters/poseidon/poseidon.gd" type="Script" id=1]
 [ext_resource path="res://characters/characterUI.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://characters/poseidon/trident_poseidon.png" type="Texture" id=5]
 [ext_resource path="res://characters/poseidon/healthbar_left.png" type="Texture" id=6]
 [ext_resource path="res://characters/poseidon/healthbar_left_under.png" type="Texture" id=7]
+[ext_resource path="res://fish/swordfishIcon.png" type="Texture" id=8]
 
 [sub_resource type="Shader" id=5]
 code = "// NOTE: Shader automatically converted from Godot Engine 3.5.2.stable's ParticlesMaterial.
@@ -261,9 +262,10 @@ aim_right_control = "p2_aim_right"
 basic_attack_control = "p2_basic_attack"
 melee_attack_control = "p2_melee_attack"
 dash_control = "p2_dash"
+fish_throw_control = "p2_fish_throw"
+fish_eat_control = "p2_eat_fish"
 
 [node name="Trident" parent="." instance=ExtResource( 3 )]
-scale = Vector2( 1, 1 )
 player = 2
 
 [node name="Trident" parent="Trident" index="0"]
@@ -275,7 +277,6 @@ texture = ExtResource( 5 )
 [node name="ChargeAttackParticles" type="Particles2D" parent="Trident"]
 visible = false
 position = Vector2( 35.6, 11.2 )
-scale = Vector2( 1, 1 )
 amount = 107
 lifetime = 1.43
 preprocess = 0.34
@@ -285,7 +286,6 @@ process_material = SubResource( 8 )
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2( 6.99383e-08, 0.400001 )
 rotation = -1.5708
-scale = Vector2( 1, 1 )
 polygon = PoolVector2Array( 20.4, -21.2, 3.98648e-06, -23.2, -19.6, -13.2, -17.6, 6.8, 1.6, 17.2, 21.6, -1.2 )
 
 [node name="Sprite" type="Sprite" parent="CollisionPolygon2D"]
@@ -331,21 +331,22 @@ expand = true
 
 [node name="Fish" type="HBoxContainer" parent="UI"]
 margin_left = 156.0
-margin_top = 77.0
+margin_top = 74.0
 margin_right = 297.0
-margin_bottom = 117.0
+margin_bottom = 122.0
 
 [node name="TextureRect1" type="TextureRect" parent="UI/Fish"]
 margin_right = 25.0
-margin_bottom = 40.0
+margin_bottom = 48.0
 rect_min_size = Vector2( 25, 40 )
 size_flags_horizontal = 3
+texture = ExtResource( 8 )
 expand = true
 
 [node name="TextureRect2" type="TextureRect" parent="UI/Fish"]
 margin_left = 29.0
 margin_right = 54.0
-margin_bottom = 40.0
+margin_bottom = 48.0
 rect_min_size = Vector2( 25, 40 )
 size_flags_horizontal = 3
 expand = true
@@ -353,7 +354,7 @@ expand = true
 [node name="TextureRect3" type="TextureRect" parent="UI/Fish"]
 margin_left = 58.0
 margin_right = 83.0
-margin_bottom = 40.0
+margin_bottom = 48.0
 rect_min_size = Vector2( 25, 40 )
 size_flags_horizontal = 3
 expand = true
@@ -361,7 +362,7 @@ expand = true
 [node name="TextureRect4" type="TextureRect" parent="UI/Fish"]
 margin_left = 87.0
 margin_right = 112.0
-margin_bottom = 40.0
+margin_bottom = 48.0
 rect_min_size = Vector2( 25, 40 )
 size_flags_horizontal = 3
 expand = true
@@ -369,7 +370,7 @@ expand = true
 [node name="TextureRect5" type="TextureRect" parent="UI/Fish"]
 margin_left = 116.0
 margin_right = 141.0
-margin_bottom = 40.0
+margin_bottom = 48.0
 rect_min_size = Vector2( 25, 40 )
 size_flags_horizontal = 3
 expand = true

@@ -1,9 +1,11 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://fish/fish.gd" type="Script" id=1]
-[ext_resource path="res://fish/riba1.png" type="Texture" id=2]
+[ext_resource path="res://fish/swordfishIcon.png" type="Texture" id=2]
+[ext_resource path="res://fish/swordfish.png" type="Texture" id=3]
 
 [resource]
 script = ExtResource( 1 )
-texture = ExtResource( 2 )
-throw_scene = ""
+icon_texture = ExtResource( 2 )
+pickup_texture = ExtResource( 3 )
+throw_scene = "res://fish/swordfish.tscn"

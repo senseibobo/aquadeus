@@ -16,7 +16,7 @@ func _process(delta):
 		fish.fish = [preload("res://fish/swordfish.tres")][randi()%1]
 		var x = 1920/2 -250 + 500*randf()
 		fish.global_position = Vector2(x,-100)
-		fish.get_node("Riba1").texture = fish.fish.texture
+		fish.get_node("Riba1").texture = fish.fish.pickup_texture
 		add_child(fish)
 
 func restart():
@@ -37,9 +37,11 @@ func trigger_mojsije():
 	tween.tween_property($VodaDesno,"global_position",$VodaDesno.global_position + Vector2(130,0),2.0)
 	tween.tween_interval(1.0)
 	tween.tween_callback(self,"mojsije_walk")
+	tween.tween_property(Global,"mojsije_split",true,0)
 	tween.chain()
 	tween.tween_interval(14.0)
 	tween.chain()
+	tween.tween_property(Global,"mojsije_split",false,0)
 	tween.tween_property($VodaLevo,"global_position",$VodaLevo.global_position,2.0)
 	tween.tween_property($VodaDesno,"global_position",$VodaDesno.global_position,2.0)
 	tween.chain()

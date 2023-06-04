@@ -259,6 +259,8 @@ aim_right_control = "p1_aim_right"
 basic_attack_control = "p1_basic_attack"
 melee_attack_control = "p1_melee_attack"
 dash_control = "p1_dash"
+fish_throw_control = "p1_fish_throw"
+fish_eat_control = "p1_eat_fish"
 
 [node name="Trident" parent="." instance=ExtResource( 3 )]
 
@@ -327,12 +329,12 @@ expand = true
 margin_left = 1623.0
 margin_top = 77.0
 margin_right = 1764.0
-margin_bottom = 117.0
+margin_bottom = 125.0
 alignment = 2
 
 [node name="TextureRect1" type="TextureRect" parent="UI/Fish"]
 margin_right = 25.0
-margin_bottom = 40.0
+margin_bottom = 48.0
 rect_min_size = Vector2( 25, 40 )
 size_flags_horizontal = 3
 expand = true
@@ -340,7 +342,7 @@ expand = true
 [node name="TextureRect2" type="TextureRect" parent="UI/Fish"]
 margin_left = 29.0
 margin_right = 54.0
-margin_bottom = 40.0
+margin_bottom = 48.0
 rect_min_size = Vector2( 25, 40 )
 size_flags_horizontal = 3
 expand = true
@@ -348,7 +350,7 @@ expand = true
 [node name="TextureRect3" type="TextureRect" parent="UI/Fish"]
 margin_left = 58.0
 margin_right = 83.0
-margin_bottom = 40.0
+margin_bottom = 48.0
 rect_min_size = Vector2( 25, 40 )
 size_flags_horizontal = 3
 expand = true
@@ -356,7 +358,7 @@ expand = true
 [node name="TextureRect4" type="TextureRect" parent="UI/Fish"]
 margin_left = 87.0
 margin_right = 112.0
-margin_bottom = 40.0
+margin_bottom = 48.0
 rect_min_size = Vector2( 25, 40 )
 size_flags_horizontal = 3
 expand = true
@@ -364,7 +366,7 @@ expand = true
 [node name="TextureRect5" type="TextureRect" parent="UI/Fish"]
 margin_left = 116.0
 margin_right = 141.0
-margin_bottom = 40.0
+margin_bottom = 48.0
 rect_min_size = Vector2( 25, 40 )
 size_flags_horizontal = 3
 expand = true

@@ -15,7 +15,7 @@ func fill_fish(fish_array):
 	print(fish_array)
 	for fish in fish_array:
 		if fish:
-			$Fish.get_child(i).texture = fish.texture
+			$Fish.get_child(i).texture = fish.icon_texture
 		i += 1
 			
 
