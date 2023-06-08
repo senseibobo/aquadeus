@@ -92,7 +92,6 @@ func _process_basic_attack_charge(delta):
 			
 func _process_basic_attack_input():
 	if Input.is_action_just_pressed(basic_attack_control): basic_charging = true
-		#$Trident/ChargeAttackParticles.emitting = true
 	elif Input.is_action_just_released(basic_attack_control): _release_basic_attack()
 
 func _process_other_input():
@@ -136,7 +135,6 @@ func _eat_fish():
 	Global.play_sound(preload("res://sfx/consume_final.mp3"))
 	$CollisionPolygon2D/EatParticles.emitting = true
 
-
 func _release_basic_attack():
 	
 	Global.play_sound(preload("res://sfx/Basic_atk_2.mp3"),0.14)
@@ -168,7 +166,7 @@ func set_angle(angle):
 	$CollisionPolygon2D.rotation = angle - PI/2.0
 	trident.rotation = angle
 	
-func get_move_dir():
+func _get_move_dir():
 	var h_move = Input.get_axis(move_left_control,move_right_control)
 	var v_move = Input.get_axis(move_up_control,move_down_control)
 	var move_vec = Vector2(h_move/2.0,v_move/2.0).normalized()
@@ -215,7 +213,7 @@ func _physics_process_charging(delta):
 	velocity = velocity.linear_interpolate(Vector2(),acceleration*delta)
 			
 func _physics_process_free(delta):
-		var move_vec = get_move_dir()
+		var move_vec = _get_move_dir()
 		velocity = velocity.linear_interpolate(move_vec,acceleration*delta)
 		move_and_slide(velocity*speed)
 		
@@ -225,9 +223,9 @@ func _apply_screen_edge_bounce(delta):
 			velocity.x = lerp(velocity.x, 5, 10.0*delta)
 		if global_position.y < 0.0:
 			velocity.y = lerp(velocity.y, 5, 10.0*delta)
-		if global_position.x > 1920.0:
+		if global_position.x > Global.SCREEN_SIZE.x:
 			velocity.x = lerp(velocity.x, -5, 10.0*delta)
-		if global_position.y > 1080.0:
+		if global_position.y > Global.SCREEN_SIZE.y:
 			velocity.y = lerp(velocity.y, -5, 10.0*delta)
 
 
