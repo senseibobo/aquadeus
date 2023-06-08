@@ -4,6 +4,10 @@ signal restart
 signal gameover
 signal roundstart
 var mojsije_split: bool = false
+
+const MOJSIJE_SPLIT_WIDTH: float = 150.0
+const VP_SIZE: Vector2 = Vector2(1920.0,1080.0) # viewport size
+
 var players = {}
 
 var music_player: AudioStreamPlayer = AudioStreamPlayer.new()

@@ -4,25 +4,27 @@ export var multiplier: float = 1.0
 
 var tween: SceneTreeTween
 
-func update_ui(health: float):
+func update_health(health: float):
+	
+	# update health
 	$Healthbar.rect_scale.x = multiplier*health/100.0
-	print($Damage.rect_scale.x)
 
-func fill_fish(fish_array):
-	for child in $Fish.get_children():
-		child.texture = null
+func update_fish(fish_array):
+	
+	# update ui textures according to player's fish
 	var i = 0
-	print(fish_array)
 	for fish in fish_array:
-		if fish:
-			$Fish.get_child(i).texture = fish.icon_texture
+		$Fish.get_child(i).texture = fish.icon_texture if fish else null
 		i += 1
 			
 func update_wins(wins: int):
-	for child in $Wins.get_children():
-		child.visible = false
-	for i in wins:
-		$Wins.get_child(i).visible = true
+	for i in 3:
+		$Wins.get_child(i).visible = wins > i
 
 func _process(delta):
 	$Damage.rect_scale.x = lerp($Damage.rect_scale.x,$Healthbar.rect_scale.x,3.0*delta)
+
+func update_ui(health, fish, wins):
+	update_wins(wins)
+	update_fish(fish)
+	update_health(health)
