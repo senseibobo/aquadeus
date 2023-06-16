@@ -1,23 +1,37 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://br1t62fdjha1y"]
 
-[ext_resource path="res://ui/maintheme.tres" type="Theme" id=1]
-[ext_resource path="res://ui/mojsijeincoming.gd" type="Script" id=2]
-[ext_resource path="res://ui/CaesarDressing-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource type="Theme" uid="uid://ddpboj1tjxoti" path="res://ui/maintheme.tres" id="1"]
+[ext_resource type="Script" path="res://ui/mojsijeincoming.gd" id="2"]
+[ext_resource type="FontFile" uid="uid://da3c454rbkvui" path="res://ui/CaesarDressing-Regular.ttf" id="3"]
 
-[sub_resource type="DynamicFont" id=1]
-size = 64
-outline_size = 4
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 3 )
+[sub_resource type="FontFile" id="1"]
+fallbacks = Array[Font]([ExtResource("3")])
+face_index = null
+embolden = null
+transform = null
+cache/0/35/0/ascent = 0.0
+cache/0/35/0/descent = 0.0
+cache/0/35/0/underline_position = 0.0
+cache/0/35/0/underline_thickness = 0.0
+cache/0/35/0/scale = 1.0
+cache/0/35/0/kerning_overrides/35/0 = Vector2(0, 0)
+cache/0/35/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/35/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
 
 [node name="Control" type="CanvasLayer"]
-script = ExtResource( 2 )
+script = ExtResource("2")
 
 [node name="Label" type="Label" parent="."]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 8.0
-theme = ExtResource( 1 )
-custom_fonts/font = SubResource( 1 )
+offset_top = 8.0
+theme = ExtResource("1")
+theme_override_fonts/font = SubResource("1")
 text = "MOJSIJE INCOMING"
-align = 1

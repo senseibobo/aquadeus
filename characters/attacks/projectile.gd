@@ -1,16 +1,16 @@
 extends Area2D
 class_name Projectile
 
-export var player: int
-export var speed: float = 1500.0
-export var deceleration: float = 1400.0
-export var direction: Vector2 = Vector2(1,1)
+@export var player: int
+@export var speed: float = 1500.0
+@export var deceleration: float = 1400.0
+@export var direction: Vector2 = Vector2(1,1)
 
-export(float,0.0,100.0) var damage: float = 5.0
+@export var damage: float = 5.0 # (float,0.0,100.0)
 
 
 func _ready():
-	Global.connect("restart",self,"queue_free")
+	Global.connect("restart", Callable(self, "queue_free"))
 
 func _physics_process(delta):
 	
@@ -28,9 +28,9 @@ func on_hit(body):
 		death()
 
 func death():
-	var particles = $Particles2D
+	var particles = $GPUParticles2D
 	remove_child(particles)
 	get_parent().add_child(particles)
-	get_tree().create_timer(0.3).connect("timeout",particles,"queue_free")
+	get_tree().create_timer(0.3).connect("timeout", Callable(particles, "queue_free"))
 	queue_free()
 		

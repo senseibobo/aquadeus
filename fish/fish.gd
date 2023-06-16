@@ -1,8 +1,8 @@
 extends Resource
 class_name Fish
 
-export var icon_texture: Texture
-export var pickup_texture: Texture
-export(String,FILE) onready var throw_scene = load(throw_scene)
+@export var icon_texture: Texture2D
+@export var pickup_texture: Texture2D
+@export_file("*.tscn") var throw_scene_file
 func instance():
-	return throw_scene.instance()
+	return load(throw_scene_file).instantiate()

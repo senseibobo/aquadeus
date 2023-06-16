@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 class_name Player
 
 enum STATE {
@@ -18,32 +18,31 @@ var frozen: bool = true
 
 var wins: int = 0
 
-export(int,1,2) var player: int = 1
-export var max_health: float = 100.0
-onready var health: float = max_health
-onready var ui: CanvasLayer = $UI
-onready var trident = $Trident
+@export var player: int = 1 # (int,1,2)
+@export var max_health: float = 100.0
+@onready var health: float = max_health
+@onready var ui: CanvasLayer = $UI
+@onready var trident = $Trident
 
-export var move_up_control: String
-export var move_down_control: String
-export var move_left_control: String
-export var move_right_control: String
-export var aim_up_control: String
-export var aim_down_control: String
-export var aim_left_control: String
-export var aim_right_control: String
-export var basic_attack_control: String
-export var melee_attack_control: String
-export var dash_control: String
-export var fish_throw_control: String
-export var fish_eat_control: String
+@export var move_up_control: String
+@export var move_down_control: String
+@export var move_left_control: String
+@export var move_right_control: String
+@export var aim_up_control: String
+@export var aim_down_control: String
+@export var aim_left_control: String
+@export var aim_right_control: String
+@export var basic_attack_control: String
+@export var melee_attack_control: String
+@export var dash_control: String
+@export var fish_throw_control: String
+@export var fish_eat_control: String
 
-export var trident_dash_speed: float = 1200.0
-export var trident_dash_distance: float = 150.0
+@export var trident_dash_speed: float = 1200.0
+@export var trident_dash_distance: float = 150.0
 var trident_dash_distance_left: float = 0.0
 
 var acceleration: float = 4.8
-var velocity: Vector2
 var basic_charging = false
 var dash_cooldown = 1.4
 var dash_cooldown_remaining: float = 0.0
@@ -55,9 +54,9 @@ var fish: Array = []
 
 func _ready():
 	Global.players[player] = self
-	Global.connect("roundstart",self,"_on_round_start")
-	trident.connect("returning",self,"_on_trident_return")
-	trident.connect("stab",self,"_on_trident_stab")
+	Global.connect("roundstart", Callable(self, "_on_round_start"))
+	trident.connect("returning", Callable(self, "_on_trident_return"))
+	trident.connect("stab", Callable(self, "_on_trident_stab"))
 
 func _on_trident_stab():
 	state = STATE.ATTACK_DASHING
@@ -82,7 +81,7 @@ func _process(delta):
 
 func _apply_mojsije_debuff(delta):
 	if Global.mojsije_split and abs(global_position.x-Global.SCREEN_SIZE.x/2.0) < Global.MOJSIJE_SPLIT_WIDTH:
-		velocity = velocity.linear_interpolate(Vector2(),4*acceleration*delta)
+		velocity = velocity.lerp(Vector2(),4*acceleration*delta)
 
 func _process_basic_attack_charge(delta):
 	if basic_charging:
@@ -108,7 +107,7 @@ func _melee_attack():
 func _dash():
 	state = STATE.DASHING
 	dash_cooldown_remaining = dash_cooldown
-	velocity = last_dir*2.0
+	velocity = last_dir*200.0
 	set_angle(last_dir.angle())
 
 func _throw_fish():
@@ -116,7 +115,7 @@ func _throw_fish():
 	else:
 		var f: Fish = fish[0]
 		fish.pop_front()
-		var projectile = load(f.throw_scene).instance()
+		var projectile = load(f.throw_scene).instantiate()
 		projectile.dir = last_dir
 		projectile.player = player
 		get_parent().add_child(projectile)
@@ -129,7 +128,7 @@ func _eat_fish():
 	fish.pop_front()
 	health = clamp(health + 20, 0, 100)
 	state = STATE.EATING
-	get_tree().create_timer(0.6).connect("timeout",self,"set",["state",STATE.FREE])
+	get_tree().create_timer(0.6).connect("timeout", Callable(self, "set").bind("state",STATE.FREE))
 	ui.update_health(health)
 	ui.update_fish(fish)
 	Global.play_sound(preload("res://sfx/consume_final.mp3"))
@@ -151,7 +150,7 @@ func _get_shot_dir():
 	return last_dir
 
 func _launch_projectile(dir):	
-	var puc = load("res://characters/attacks/basic.tscn").instance()
+	var puc = load("res://characters/attacks/basic.tscn").instantiate()
 	get_parent().add_child(puc)
 	puc.global_position = global_position
 	puc.direction = dir
@@ -194,39 +193,40 @@ func _physics_process(delta):
 		STATE.EATING: _physics_process_eating(delta)
 
 func _physics_process_eating(delta):
-	move_and_slide(velocity*speed)
-	velocity = velocity.linear_interpolate(Vector2(),2*acceleration*delta)
+	move_and_slide()
+	velocity = velocity.lerp(Vector2(),2*acceleration*delta)
 
 func _physics_process_dashing(delta):
-	move_and_slide(velocity*speed)
-	velocity = velocity.linear_interpolate(Vector2(),acceleration*delta)
+	move_and_slide()
+	velocity = velocity.lerp(Vector2(),acceleration*delta)
 	if velocity.length() < 0.1:
 		state = STATE.FREE
 		
 func _physics_process_attack_dashing(delta):
-		move_and_slide(last_dir*trident_dash_speed)
+		velocity = last_dir*trident_dash_speed
+		move_and_slide()
 		trident_dash_distance_left -= delta*trident_dash_speed
 
 func _physics_process_charging(delta):
 	set_angle(last_dir.angle())
-	move_and_slide(velocity*speed)
-	velocity = velocity.linear_interpolate(Vector2(),acceleration*delta)
+	move_and_slide()
+	velocity = velocity.lerp(Vector2(),acceleration*delta)
 			
 func _physics_process_free(delta):
-		var move_vec = _get_move_dir()
-		velocity = velocity.linear_interpolate(move_vec,acceleration*delta)
-		move_and_slide(velocity*speed)
+		var move_vec = _get_move_dir()*speed
+		velocity = velocity.lerp(move_vec,acceleration*delta)
+		move_and_slide()
 		
 func _apply_screen_edge_bounce(delta):
-	if not Rect2(Vector2(),Global.SCREEN_SIZE).has_point(global_position):
+	if not Rect2(Vector2(),Global.VP_SIZE).has_point(global_position):
 		if global_position.x < 0.0:
-			velocity.x = lerp(velocity.x, 5, 10.0*delta)
+			velocity.x = lerp(velocity.x, 5.0, 10.0*delta)
 		if global_position.y < 0.0:
-			velocity.y = lerp(velocity.y, 5, 10.0*delta)
-		if global_position.x > Global.SCREEN_SIZE.x:
-			velocity.x = lerp(velocity.x, -5, 10.0*delta)
-		if global_position.y > Global.SCREEN_SIZE.y:
-			velocity.y = lerp(velocity.y, -5, 10.0*delta)
+			velocity.y = lerp(velocity.y, 5.0, 10.0*delta)
+		if global_position.x > Global.VP_SIZE.x:
+			velocity.x = lerp(velocity.x, -5.0, 10.0*delta)
+		if global_position.y > Global.VP_SIZE.y:
+			velocity.y = lerp(velocity.y, -5.0, 10.0*delta)
 
 
 func hit(damage: float):
@@ -243,13 +243,13 @@ func death():
 	Global.emit_signal("gameover")
 	Global.players[3-player].wins += 1
 	Global.players[3-player].ui.update_wins(Global.players[3-player].wins)
-	if Global.players[3-player].wins == 2:
-		var game_over = preload("res://ui/gameend.tscn").instance()
+	if Global.players[3-player].wins == 3:
+		var game_over = preload("res://ui/gameend.tscn").instantiate()
 		game_over.winner = 3-player
 		Global.add_child(game_over)
 		Global.players = {}
 	else:
-		var death_screen = preload("res://ui/gameover.tscn").instance()
+		var death_screen = preload("res://ui/gameover.tscn").instantiate()
 		Global.add_child(death_screen)
 		print(Global.players)
 		
@@ -267,10 +267,10 @@ func restart():
 func _on_round_start():
 	frozen = false
 
-func acquire_fish(fish: Fish):
-	if self.fish.size() < 5:
-		self.fish.append(fish)
-		ui.update_fish(self.fish)
+func acquire_fish(acquired_fish: Fish):
+	if fish.size() < 5:
+		fish.append(acquired_fish)
+		ui.update_fish(fish)
 		return true
 	else:
 		return false

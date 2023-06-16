@@ -8,13 +8,13 @@ signal returned
 
 var attacking: bool = false
 
-export(int,1,2) var player = 1
+@export var player = 1 # (int,1,2)
 
 func _ready():
-	connect("returning",self,"_returning")
-	connect("returned",self,"_returned")
-	connect("stab",$Trident/Hitbox,"set_deferred",["monitoring",true])
-	Global.connect("gameover",self,"game_over")
+	connect("returning", Callable(self, "_returning"))
+	connect("returned", Callable(self, "_returned"))
+	connect("stab", Callable($Trident/Hitbox, "set_deferred").bind("monitoring",true))
+	Global.connect("gameover", Callable(self, "game_over"))
 
 func attack():
 	if attacking: return
@@ -22,15 +22,15 @@ func attack():
 	attacking = true
 	# animation
 	var tween = create_tween()
-	tween.tween_callback(self,"emit_signal",["start_charging"])
+	tween.tween_callback(Callable(self, "emit_signal").bind("start_charging"))
 	tween.tween_property($Trident,"position", Vector2(-25,16), 0.6)
-	tween.tween_callback(self,"emit_signal",["stab"])
+	tween.tween_callback(Callable(self, "emit_signal").bind("stab"))
 	tween.tween_property($Trident,"position", Vector2(40,16), 0.1)
-	tween.tween_callback(self,"emit_signal",["stabbed"])
+	tween.tween_callback(Callable(self, "emit_signal").bind("stabbed"))
 	tween.tween_interval(0.3)
-	tween.tween_callback(self,"emit_signal",["returning"])
+	tween.tween_callback(Callable(self, "emit_signal").bind("returning"))
 	tween.tween_property($Trident,"position",Vector2(0,16),0.2)
-	tween.tween_callback(self,"emit_signal",["returned"])
+	tween.tween_callback(Callable(self, "emit_signal").bind("returned"))
 	
 func _returned():
 	attacking = false

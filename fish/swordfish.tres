@@ -1,11 +1,11 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" script_class="Fish" load_steps=4 format=3 uid="uid://dury7u7ih378y"]
 
-[ext_resource path="res://fish/fish.gd" type="Script" id=1]
-[ext_resource path="res://fish/swordfishIcon.png" type="Texture" id=2]
-[ext_resource path="res://fish/swordfish.png" type="Texture" id=3]
+[ext_resource type="Script" path="res://fish/fish.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://dtjoadv5krxfs" path="res://fish/swordfishIcon.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://ciooqbv3wkf3i" path="res://fish/swordfish.png" id="3"]
 
 [resource]
-script = ExtResource( 1 )
-icon_texture = ExtResource( 2 )
-pickup_texture = ExtResource( 3 )
-throw_scene = "res://fish/swordfish.tscn"
+script = ExtResource("1")
+icon_texture = ExtResource("2")
+pickup_texture = ExtResource("3")
+throw_scene_file = "res://fish/swordfish.tscn"

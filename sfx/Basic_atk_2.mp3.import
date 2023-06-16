@@ -2,14 +2,18 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.import/Basic_atk_2.mp3-f049c0bfff91ad4de430c661052014c6.mp3str"
+uid="uid://coab10wifjxhg"
+path="res://.godot/imported/Basic_atk_2.mp3-f049c0bfff91ad4de430c661052014c6.mp3str"
 
 [deps]
 
 source_file="res://sfx/Basic_atk_2.mp3"
-dest_files=[ "res://.import/Basic_atk_2.mp3-f049c0bfff91ad4de430c661052014c6.mp3str" ]
+dest_files=["res://.godot/imported/Basic_atk_2.mp3-f049c0bfff91ad4de430c661052014c6.mp3str"]
 
 [params]
 
 loop=false
 loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

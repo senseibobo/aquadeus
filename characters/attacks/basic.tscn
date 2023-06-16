@@ -1,52 +1,45 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://c5ma1fkp740t3"]
 
-[ext_resource path="res://characters/attacks/projectile.gd" type="Script" id=1]
-[ext_resource path="res://characters/attacks/basic_attack.png" type="Texture" id=2]
+[ext_resource type="Script" path="res://characters/attacks/projectile.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://c4qd664i16m11" path="res://characters/attacks/basic_attack.png" id="2"]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id="1"]
 radius = 12.0
 
-[sub_resource type="Gradient" id=3]
-offsets = PoolRealArray( 0, 0.709677, 1 )
-colors = PoolColorArray( 0.27451, 0.482353, 0.705882, 1, 0.789374, 0.849715, 0.914611, 1, 1, 1, 1, 1 )
+[sub_resource type="Gradient" id="3"]
+offsets = PackedFloat32Array(0, 0.709677, 1)
+colors = PackedColorArray(0.27451, 0.482353, 0.705882, 1, 0.789374, 0.849715, 0.914611, 1, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture" id=4]
-gradient = SubResource( 3 )
+[sub_resource type="GradientTexture2D" id="4"]
+gradient = SubResource("3")
 
-[sub_resource type="ParticlesMaterial" id=2]
+[sub_resource type="ParticleProcessMaterial" id="2"]
 emission_shape = 2
-emission_box_extents = Vector3( 1, 8.454, 1 )
-flag_disable_z = true
-direction = Vector3( -1, 0, 0 )
+emission_sphere_radius = 1.0
+direction = Vector3(-1, 0, 0)
 spread = 0.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 100.0
-initial_velocity_random = 0.78
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-scale = 5.03
-color_initial_ramp = SubResource( 4 )
+gravity = Vector3(0, 0, 0)
+color_initial_ramp = SubResource("4")
 
 [node name="Basic" type="Area2D"]
 collision_layer = 4
 collision_mask = 3
-script = ExtResource( 1 )
+script = ExtResource("1")
 damage = 3.001
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+shape = SubResource("1")
 
-[node name="BasicAttack" type="Sprite" parent="."]
-position = Vector2( 0, 2 )
-scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 2 )
+[node name="BasicAttack" type="Sprite2D" parent="."]
+position = Vector2(0, 2)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2")
 
-[node name="Particles2D" type="Particles2D" parent="."]
-position = Vector2( 9, 2 )
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(9, 2)
 amount = 88
+process_material = SubResource("2")
 lifetime = 0.17
 randomness = 1.0
-local_coords = false
-process_material = SubResource( 2 )
 
 [connection signal="body_entered" from="." to="." method="on_hit"]

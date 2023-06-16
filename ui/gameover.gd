@@ -13,6 +13,6 @@ func set_message(message: String):
 		$AnimationPlayer.play("Poseidon")
 
 
-func animation_finished(anim_name):
+func animation_finished(_anim_name):
 	Global.emit_signal("restart")
 	queue_free()

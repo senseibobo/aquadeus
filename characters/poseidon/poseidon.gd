@@ -2,7 +2,7 @@ extends Player
 
 
 func restart():
-	.restart()
+	super.restart()
 	
 	# rotates to face right upon spawning
 	last_dir = Vector2.RIGHT

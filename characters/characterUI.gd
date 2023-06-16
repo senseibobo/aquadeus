@@ -1,13 +1,13 @@
 extends CanvasLayer
 
-export var multiplier: float = 1.0
+@export var multiplier: float = 1.0
 
-var tween: SceneTreeTween
+var tween: Tween
 
 func update_health(health: float):
 	
 	# update health
-	$Healthbar.rect_scale.x = multiplier*health/100.0
+	$Healthbar.scale.x = multiplier*health/100.0
 
 func update_fish(fish_array):
 	
@@ -22,7 +22,7 @@ func update_wins(wins: int):
 		$Wins.get_child(i).visible = wins > i
 
 func _process(delta):
-	$Damage.rect_scale.x = lerp($Damage.rect_scale.x,$Healthbar.rect_scale.x,3.0*delta)
+	$Damage.scale.x = lerp($Damage.scale.x,$Healthbar.scale.x,3.0*delta)
 
 func update_ui(health, fish, wins):
 	update_wins(wins)

@@ -7,7 +7,7 @@ func _ready():
 	
 func _on_Play_pressed():
 	Global.play_sound(preload("res://sfx/menu_click_SFX_2.wav"))
-	get_tree().change_scene("res://arena/Arena.tscn")
+	get_tree().change_scene_to_file("res://arena/Arena.tscn")
 
 
 func _on_Quit_pressed():

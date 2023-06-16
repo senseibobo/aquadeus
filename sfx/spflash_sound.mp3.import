@@ -2,14 +2,18 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.import/spflash_sound.mp3-b28db43f8eacdefb4ac4ff55ce478a6e.mp3str"
+uid="uid://dex74lwqe5c8j"
+path="res://.godot/imported/spflash_sound.mp3-b28db43f8eacdefb4ac4ff55ce478a6e.mp3str"
 
 [deps]
 
 source_file="res://sfx/spflash_sound.mp3"
-dest_files=[ "res://.import/spflash_sound.mp3-b28db43f8eacdefb4ac4ff55ce478a6e.mp3str" ]
+dest_files=["res://.godot/imported/spflash_sound.mp3-b28db43f8eacdefb4ac4ff55ce478a6e.mp3str"]
 
 [params]
 
 loop=false
 loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

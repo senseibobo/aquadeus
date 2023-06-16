@@ -9,5 +9,5 @@ func _ready():
 	tween.tween_interval(1.0)
 	tween.tween_property($Label,"modulate:a",0.0,0.5)
 	tween.tween_interval(2.0)
-	tween.tween_callback(self,"emit_signal",["done"])
-	tween.tween_callback(self,"queue_free")
+	tween.tween_callback(Callable(self, "emit_signal").bind("done"))
+	tween.tween_callback(Callable(self, "queue_free"))

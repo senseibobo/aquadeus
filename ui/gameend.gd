@@ -12,5 +12,5 @@ func _input(event):
 		get_tree().reload_current_scene()
 		queue_free()
 	elif event.is_action_pressed("return_to_main_menu"):
-		get_tree().change_scene("res://ui/menu/mainmenu.tscn")
+		get_tree().change_scene_to_file("res://ui/menu/mainmenu.tscn")
 		queue_free()
