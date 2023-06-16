@@ -115,7 +115,7 @@ func _throw_fish():
 	else:
 		var f: Fish = fish[0]
 		fish.pop_front()
-		var projectile = load(f.throw_scene).instantiate()
+		var projectile = f.instance()
 		projectile.dir = last_dir
 		projectile.player = player
 		get_parent().add_child(projectile)
@@ -213,9 +213,10 @@ func _physics_process_charging(delta):
 	velocity = velocity.lerp(Vector2(),acceleration*delta)
 			
 func _physics_process_free(delta):
-		var move_vec = _get_move_dir()*speed
-		velocity = velocity.lerp(move_vec,acceleration*delta)
-		move_and_slide()
+	var move_vec = _get_move_dir()*speed
+	print(move_vec)
+	velocity = velocity.lerp(move_vec,acceleration*delta)
+	move_and_slide()
 		
 func _apply_screen_edge_bounce(delta):
 	if not Rect2(Vector2(),Global.VP_SIZE).has_point(global_position):

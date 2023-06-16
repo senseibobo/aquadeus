@@ -12,10 +12,8 @@ func update_health(health: float):
 func update_fish(fish_array):
 	
 	# update ui textures according to player's fish
-	var i = 0
-	for fish in fish_array:
-		$Fish.get_child(i).texture = fish.icon_texture if fish else null
-		i += 1
+	for i in 5:
+		$Fish.get_child(i).texture = fish_array[i].icon_texture if fish_array.size() > i else null
 			
 func update_wins(wins: int):
 	for i in 3:
