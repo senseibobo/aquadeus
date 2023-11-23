@@ -1,5 +1,5 @@
 # Aquadeus 
-This is another game that I made with people I had previously not known. It won 2nd place on the OpenIT Game Jam 2022.<br>
+This is another game that I made with people I had previously not known. It won 2nd place on the OpenIT Game Jam 2023.<br>
 It's a 2-player game about Poseidon and Neptune fighting about who the real god of the sea is.<br>
 It's designed for controllers primarily, but also supports keyboard.<br>
 Features:
